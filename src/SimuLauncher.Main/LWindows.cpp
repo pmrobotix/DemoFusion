@@ -1,0 +1,171 @@
+#include "LWindows.hpp"
+
+#include <SDL2/SDL_pixels.h>
+#include <SDL2/SDL_rect.h>
+#include <SDL2/SDL_render.h>
+#include <cstdio>
+#include <list>
+
+#include "BotManager.hpp"
+#include "Button.hpp"
+#include "DemoButtons.hpp"
+#include "PlayButtonListener.hpp"
+#include "ResetButtonListener.hpp"
+#include "StopButtonListener.hpp"
+#include "Text.hpp"
+
+bool MainWindow::loadContent(BotManager *botm)
+{
+	bool success = true;
+
+	if (!gBackgroundTextureMain.load(mRenderer, "./resources/ground_2016_1400x1027px.svg"))
+	{
+		printf("Error: Failed to load background texture image!\n");
+		success = false;
+	}
+	/*
+	 if (!gBackgroundTexturePng.loadFromFile(mRenderer, "./resources/svg.png"))
+	 {
+	 printf("Error: Failed to load background texture image!\n");
+	 success = false;
+	 }
+
+	 //Load background texture on window n°0
+	 if (!gBackgroundTextureSvg.loadFromSVG(mRenderer, "./resources/23.svg"))
+	 {
+	 printf("Error: Failed to load background texture svg!\n");
+	 success = false;
+	 }
+	 */
+	//text
+	Text * text = new Text(50, 0, 0, 0);
+	SDL_Color textColor =
+	{ 100, 100, 100, 0 };
+	text->loadMedia(mRenderer, "./resources/ttf/Verdana/verdanab.ttf", "DEMO", 28, textColor);
+	this->addPanel(text);
+
+	//reset button
+	Button * resetButton = new Button(0, 80, 64, 64);
+	resetButton->loadMediaButton(mRenderer, "./resources/IHM/orientation73_64_blue.png",
+			"./resources/IHM/orientation73_64_blue.png",
+			"./resources/IHM/orientation73_64_blue.png",
+			"./resources/IHM/orientation73_64_blue.png");
+	this->addPanel(resetButton);
+	ResetButtonListener * resetListener = new ResetButtonListener(botm);
+	resetButton->setButtonListener(resetListener);
+
+	//Play button
+	Button * playButton = new Button(70, 80, 64, 64);
+	playButton->loadMediaButton(mRenderer, "./resources/IHM/play-button4_64_green.svg",
+			"./resources/IHM/play-button4_64_green_over.svg",
+			"./resources/IHM/play-button4_64_green.svg",
+			"./resources/IHM/play-button4_64_green.svg");
+	this->addPanel(playButton);
+	PlayButtonListener * playListener = new PlayButtonListener(botm);
+	playButton->setButtonListener(playListener);
+
+	//Stop button
+	Button * stopButton = new Button(140, 80, 64, 64);
+	stopButton->loadMediaButton(mRenderer, "./resources/IHM/stop48_64_red.png",
+			"./resources/IHM/stop48_64_red.png", "./resources/IHM/stop48_64_red.png",
+			"./resources/IHM/stop48_64_red.png");
+	this->addPanel(stopButton);
+	StopButtonListener * stopListener = new StopButtonListener(botm);
+	stopButton->setButtonListener(stopListener);
+
+	return success;
+}
+
+void MainWindow::render()
+{
+	if (!isMinimized())
+	{
+		//Initialize renderer color
+		SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(mRenderer);
+		SDL_Rect stretchRect;
+		stretchRect =
+		//{	0, 0, getWidth(), getHeight()};
+		{	0, 40, 1400, 1027}; //rect dans l'image
+		//gBackgroundTextureMain.setAlpha(100);
+		gBackgroundTextureMain.render(mRenderer, 150, 0, &stretchRect);
+		/*
+		 SDL_Rect stretchRectsvg;
+		 stretchRectsvg =
+		 {	0, 0, gBackgroundTextureSvg.getWidth(), gBackgroundTextureSvg.getHeight()};
+		 gBackgroundTextureSvg.setAlpha(255);
+		 gBackgroundTextureSvg.render(mRenderer, 0, 0, &stretchRectsvg);
+
+		 //Render front blended
+		 gBackgroundTexturePng.setAlpha(230);
+		 gBackgroundTexturePng.render(mRenderer, 0, 0);
+		 */
+
+		for (std::list<Panel*>::iterator iter = pList_->begin(); iter != pList_->end(); iter++)
+		{
+			Panel *p = (*iter);
+			p->render(mRenderer);
+		}
+	}
+	//Update screen
+	SDL_RenderPresent(mRenderer);
+}
+
+bool SecondWindow::loadContent(BotManager *botm)
+{
+	bool success = true;
+
+	dbuttons = new DemoButtons(this->mWindowID);
+
+	if (!gBackgroundTextureMainWin1.loadFromFile(mRenderer, "./resources/background.png"))
+	{
+		printf("Error: Failed to load background texture image!\n");
+		success = false;
+	}
+	if (!dbuttons->loadMediaButton(mRenderer, "./resources/button100.png"))
+	{
+		printf("Error: Failed to load media!\n");
+		success = false;
+	}
+
+	return success;
+}
+
+void SecondWindow::render()
+{
+	//Clear screen
+	SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(mRenderer);
+
+	if (dbuttons != NULL) dbuttons->render(mRenderer);
+
+	for (std::list<Panel*>::iterator iter = pList_->begin(); iter != pList_->end(); iter++)
+	{
+		Panel *p = (*iter);
+		p->render(mRenderer);
+	}
+
+	//Update screen
+	SDL_RenderPresent(mRenderer);
+}
+
+void SecondWindow::buttonHandleEvent(SDL_Event& e)
+{
+	dbuttons->handleEvent(&e);
+}
+
+void ThirdWindow::render()
+{
+	//Clear screen
+	SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(mRenderer);
+
+	for (std::list<Panel*>::iterator iter = pList_->begin(); iter != pList_->end(); iter++)
+	{
+		Panel *p = (*iter);
+		p->render(mRenderer);
+	}
+
+	//Update screen
+	SDL_RenderPresent(mRenderer);
+}
