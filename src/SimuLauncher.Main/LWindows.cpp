@@ -20,7 +20,7 @@ bool MainWindow::loadContent(BotManager *botm)
 
 	if (!gBackgroundTextureMain.load(mRenderer, "./resources/ground_2016_1400x1027px.svg"))
 	{
-		printf("Error: Failed to load background texture image!\n");
+		printf("Error: Failed to load background texture image ground_2016_1400x1027px.svg!\n");
 		success = false;
 	}
 	/*

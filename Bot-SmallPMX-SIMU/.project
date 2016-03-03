@@ -33,7 +33,7 @@
 		<link>
 			<name>Bot-SmallPMX.Main</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Bot-SmallPMX.Main</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-SmallPMX.Main</locationURI>
 		</link>
 		<link>
 			<name>Common</name>
@@ -43,7 +43,7 @@
 		<link>
 			<name>Driver.SIMU</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Driver.SIMU</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Driver.SIMU</locationURI>
 		</link>
 		<link>
 			<name>Log</name>

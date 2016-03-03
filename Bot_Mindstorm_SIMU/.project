@@ -28,32 +28,32 @@
 		<link>
 			<name>Bot-LegoEV3</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Bot-LegoEV3</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-LegoEV3</locationURI>
 		</link>
 		<link>
 			<name>Bot-LegoEV3.Main</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Bot-LegoEV3.Main</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-LegoEV3.Main</locationURI>
 		</link>
 		<link>
 			<name>Common</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Common</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Common</locationURI>
 		</link>
 		<link>
 			<name>Driver.SIMU</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Driver.SIMU</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Driver.SIMU</locationURI>
 		</link>
 		<link>
 			<name>Log</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Log</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Log</locationURI>
 		</link>
 		<link>
 			<name>Thread</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Thread</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Thread</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
