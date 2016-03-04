@@ -6,6 +6,7 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 
+
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -55,6 +56,8 @@ bool init()
 	{
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
 		success = false;
+
+
 	}
 	else
 	{

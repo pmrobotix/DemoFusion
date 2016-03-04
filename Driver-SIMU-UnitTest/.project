@@ -33,12 +33,12 @@
 		<link>
 			<name>Driver-SIMU-Test</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/test/Driver-SIMU-Test</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/test/Driver-SIMU-Test</locationURI>
 		</link>
 		<link>
 			<name>Driver.SIMU</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Driver.SIMU</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Driver.SIMU</locationURI>
 		</link>
 		<link>
 			<name>Log</name>

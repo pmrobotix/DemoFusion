@@ -28,22 +28,22 @@
 		<link>
 			<name>Bot-BigPMX</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Bot-BigPMX</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-BigPMX</locationURI>
 		</link>
 		<link>
 			<name>Bot-BigPMX.Main</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Bot-BigPMX.Main</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-BigPMX.Main</locationURI>
 		</link>
 		<link>
 			<name>Common</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Common</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Common</locationURI>
 		</link>
 		<link>
 			<name>Driver.SIMU</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/src/Driver.SIMU</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Driver.SIMU</locationURI>
 		</link>
 		<link>
 			<name>Log</name>
