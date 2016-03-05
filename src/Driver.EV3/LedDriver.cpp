@@ -17,7 +17,7 @@ LedDriver::~LedDriver()
 {
 }
 
-void LedDriver::setBit(int index, int color)
+void LedDriver::setBit(int index, LedColor color)
 {
 	if (index == 0) //Right
 	{
@@ -74,7 +74,7 @@ void LedDriver::setBit(int index, int color)
 	}
 }
 
-void LedDriver::setBytes(uint hex, int color)
+void LedDriver::setBytes(uint hex, LedColor color)
 {
 	for (int i = 0; i < nb_; i++)
 	{

@@ -16,9 +16,8 @@ Text::Text(int x, int y, int w, int h) : Panel(x, y, w, h)
 	gFont = NULL;
 }
 
-void Text::handleEvent(SDL_Event& e, int xMouse, int yMouse)
+void Text::handleEvent(SDL_Event& , int , int )
 {
-
 }
 
 
@@ -37,7 +36,7 @@ bool Text::loadMedia(SDL_Renderer * renderer, std::string ttf_path, std::string 
 	gFont = TTF_OpenFont( ttf_path.c_str(), ptsize);
 	if( gFont == NULL )
 	{
-		printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+		logger().error() << "Failed to load lazy font! SDL_ttf Error: " << TTF_GetError() << logs::end;
 		success = false;
 	}
 	else
@@ -46,7 +45,7 @@ bool Text::loadMedia(SDL_Renderer * renderer, std::string ttf_path, std::string 
 		//SDL_Color textColor = { 0, 0, 0 };
 		if( !texture_.loadFromRenderedText(renderer, gFont, text, textColor ) )
 		{
-			printf( "Failed to render text texture!\n" );
+			logger().error() << "Failed to render text texture!" << logs::end;
 			success = false;
 		}
 	}

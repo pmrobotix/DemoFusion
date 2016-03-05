@@ -22,9 +22,9 @@ private:
 
 public:
 
-	virtual void setBit(int index, int color);
+	virtual void setBit(int index, LedColor color);
 
-	virtual void setBytes(uint hex, int color);
+	virtual void setBytes(uint hex, LedColor color);
 
 	/*!
 	 * \brief Constructor.

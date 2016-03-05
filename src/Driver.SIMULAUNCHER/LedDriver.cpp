@@ -3,7 +3,6 @@
 #include "LedDriver.hpp"
 
 #include <SDL2/SDL_pixels.h>
-#include <unistd.h>
 #include <sstream>
 
 #include "../SimuLauncher.Main/IWindow.hpp"
@@ -38,6 +37,10 @@ LedDriver::LedDriver(std::string botname, int nb)
 
 }
 
+LedDriver::~LedDriver()
+{
+}
+
 void LedDriver::load()
 {
 	Simulator &sim = Simulator::instance();
@@ -58,10 +61,6 @@ void LedDriver::load()
 
 	sim.thirdWindow->addPanel(ledbar_);
 
-}
-
-LedDriver::~LedDriver()
-{
 }
 
 void LedDriver::setBit(int index, LedColor color)

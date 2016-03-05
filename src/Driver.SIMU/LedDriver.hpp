@@ -32,9 +32,9 @@ public:
 	uint hexa;
 
 
-	virtual void setBit(int position, int color);
+	virtual void setBit(int position, LedColor color);
 
-	virtual void setBytes(uint hexPosition, int color);
+	virtual void setBytes(uint hexPosition, LedColor color);
 
 	/*!
 	 * \brief Constructor.

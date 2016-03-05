@@ -114,7 +114,7 @@ void MainWindow::render()
 	SDL_RenderPresent(mRenderer);
 }
 
-bool SecondWindow::loadContent(BotManager *botm)
+bool SecondWindow::loadContent(BotManager *)
 {
 	bool success = true;
 

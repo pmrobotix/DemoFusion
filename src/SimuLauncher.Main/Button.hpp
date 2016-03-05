@@ -1,6 +1,10 @@
 #ifndef SIMULAUNCHER_MAIN_BUTTON_HPP_
 #define SIMULAUNCHER_MAIN_BUTTON_HPP_
 
+#include <SDL2/SDL_rect.h>
+#include <string>
+
+#include "../Log/LoggerFactory.hpp"
 #include "LTexture.hpp"
 #include "Panel.hpp"
 
@@ -22,6 +26,26 @@ enum ButtonSprite
 
 class Button: public Panel
 {
+
+private:
+
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("Button");
+		return instance;
+	}
+
+	IButtonListener* listener_;
+	LTexture mouseOutSpriteSheetTexture_;
+	LTexture mouseOverSpriteSheetTexture_;
+	LTexture mouseDownSpriteSheetTexture_;
+	LTexture mouseUpSpriteSheetTexture_;
+	SDL_Rect spriteClip_;
+
+	ButtonSprite currentSprite_;
+	bool pressleft_;
+	bool pressright_;
+
 public:
 
 	Button(int x, int y, int w, int h);
@@ -37,18 +61,6 @@ public:
 	{
 		listener_ = l;
 	}
-
-private:
-	IButtonListener* listener_;
-	LTexture mouseOutSpriteSheetTexture_;
-	LTexture mouseOverSpriteSheetTexture_;
-	LTexture mouseDownSpriteSheetTexture_;
-	LTexture mouseUpSpriteSheetTexture_;
-	SDL_Rect spriteClip_;
-
-	ButtonSprite currentSprite_;
-	bool pressleft_;
-	bool pressright_;
 
 };
 

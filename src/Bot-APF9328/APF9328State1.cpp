@@ -5,7 +5,7 @@
 
 
 IAutomateState*
-APF9328State1::execute(Robot& robot, void *data)
+APF9328State1::execute(Robot& , void *)
 {
 	logger().info() << "APF9328Start 1" << logs::end;
 

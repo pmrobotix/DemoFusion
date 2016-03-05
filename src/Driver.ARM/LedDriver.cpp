@@ -35,12 +35,12 @@ LedDriver::~LedDriver()
 	//delete (gpio);
 }
 
-void LedDriver::setBit(int index, int color)
+void LedDriver::setBit(int index, LedColor color)
 {
 	//gpio[position]->setPinValue(aValue);
 }
 
-void LedDriver::setBytes(uint hex, int color)
+void LedDriver::setBytes(uint hex, LedColor color)
 {
 
 }

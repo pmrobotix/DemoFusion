@@ -5,7 +5,7 @@
 
 
 IAutomateState*
-State1::execute(Robot& robot, void *data)
+State1::execute(Robot& , void *)
 {
 	logger().info() << "Start 1" << logs::end;
 

@@ -1,16 +1,28 @@
 #ifndef SIMULAUNCHER_MAIN_SIMULATOR_HPP_
 #define SIMULAUNCHER_MAIN_SIMULATOR_HPP_
 
+#include "../Log/LoggerFactory.hpp"
 
 class BotManager;
 class MainWindow;
 class SecondWindow;
 class ThirdWindow;
 
-
-
 class Simulator
 {
+
+private:
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref Simulator.
+	 */
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("Simulator");
+		return instance;
+	}
+
+	Simulator();
+
 public:
 
 	static Simulator & instance()
@@ -34,15 +46,10 @@ public:
 
 	void enableLedDriver();
 
-
 	MainWindow *mainWindow;
 	SecondWindow *secondWindow;
 	ThirdWindow *thirdWindow;
 	BotManager *botm;
-
-private:
-
-	Simulator();
 
 };
 

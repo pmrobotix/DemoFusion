@@ -119,25 +119,25 @@ bool Button::loadMediaButton(SDL_Renderer * renderer, std::string pathMouseOut,
 	//Load sprites
 	if (!mouseOutSpriteSheetTexture_.load(renderer, pathMouseOut))
 	{
-		printf("Error : Failed to load mouseOutSpriteSheetTexture_ !\n");
+		logger().error() << "Failed to load mouseOutSpriteSheetTexture_ !" << logs::end;
 		success = false;
 	}
 
 	if (!mouseOverSpriteSheetTexture_.load(renderer, pathMouseOver))
 	{
-		printf("Error : Failed to load mouseOverSpriteSheetTexture_ !\n");
+		logger().error() << "Failed to load mouseOverSpriteSheetTexture_ !" << logs::end;
 		success = false;
 	}
 
 	if (!mouseDownSpriteSheetTexture_.load(renderer, pathMouseDown))
 	{
-		printf("Error : Failed to load mouseDownSpriteSheetTexture_ !\n");
+		logger().error() << "Failed to load mouseDownSpriteSheetTexture_ !" << logs::end;
 		success = false;
 	}
 
 	if (!mouseUpSpriteSheetTexture_.load(renderer, pathMouseUp))
 	{
-		printf("Error : Failed to load mouseUpSpriteSheetTexture_ !\n");
+		logger().error() << "Failed to load mouseUpSpriteSheetTexture_ !" << logs::end;
 		success = false;
 	}
 

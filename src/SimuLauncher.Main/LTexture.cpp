@@ -23,8 +23,8 @@ LTexture::LTexture()
 	//Initialize
 	mTexture = NULL;
 	mImage = NULL;
-	mWidth = 0;
-	mHeight = 0;
+	mWidth_ = 0;
+	mHeight_ = 0;
 
 }
 
@@ -64,40 +64,40 @@ bool LTexture::loadFromSVG(SDL_Renderer* renderer, std::string path)
 	image = nsvgParseFromFile(filename, "px", 96.0f);
 	if (image == NULL)
 	{
-		printf("Could not open SVG image.\n");
+		logger().error() << "Could not open SVG image." << logs::end;
 		goto error;
 	}
 
 	//Get image dimensions
-	mWidth = (int) image->width;
-	mHeight = (int) image->height;
+	mWidth_ = (int) image->width;
+	mHeight_ = (int) image->height;
 
 	rast = nsvgCreateRasterizer();
 	if (rast == NULL)
 	{
-		printf("Could not init rasterizer.\n");
+		logger().error() << "Could not init rasterizer." << logs::end;
 		goto error;
 	}
 
-	img = (unsigned char*) malloc(mWidth * mHeight * 4);
+	img = (unsigned char*) malloc(mWidth_ * mHeight_ * 4);
 	if (img == NULL)
 	{
-		printf("Could not alloc image buffer.\n");
+		logger().error() << "Could not alloc image buffer." << logs::end;
 		goto error;
 	}
 
 	//printf("rasterizing image %d x %d\n", w, h);
-	nsvgRasterize(rast, image, 0, 0, 1, img, mWidth, mHeight, mWidth * 4);
+	nsvgRasterize(rast, image, 0, 0, 1, img, mWidth_, mHeight_, mWidth_ * 4);
 
 	//write PNG image in a file
 	//printf("writing svg.png\n");
 	//stbi_write_png("svg.png", mWidth, mHeight, 4, img, mWidthw * 4);
 
 	mImage = SDL_CreateRGBSurfaceFrom(img, //pointer to the pixels
-			mWidth, //Width
-			mHeight, //Height
+			mWidth_, //Width
+			mHeight_, //Height
 			32, //Depth (bits per pixel)
-			mWidth * 4, //Pitch (width*depth_in_bytes, in this case)
+			mWidth_ * 4, //Pitch (width*depth_in_bytes, in this case)
 			0x000000FF, //Red mask
 			0x0000FF00, //Green mask
 			0x00FF0000, //Blue mask
@@ -129,7 +129,7 @@ bool LTexture::loadFromFile(SDL_Renderer* renderer, std::string path)
 	{
 		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(),
 		IMG_GetError());
-		exit(0);
+		exit(-1);
 	}
 	else
 	{
@@ -140,14 +140,14 @@ bool LTexture::loadFromFile(SDL_Renderer* renderer, std::string path)
 		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		if (newTexture == NULL)
 		{
-			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(),
-					SDL_GetError());
+			logger().error() << "Unable to create texture from " << path.c_str() << "! SDL Error: "
+					<< SDL_GetError() << logs::end;
 		}
 		else
 		{
 			//Get image dimensions
-			mWidth = loadedSurface->w;
-			mHeight = loadedSurface->h;
+			mWidth_ = loadedSurface->w;
+			mHeight_ = loadedSurface->h;
 		}
 
 		//Get rid of old loaded surface
@@ -159,7 +159,8 @@ bool LTexture::loadFromFile(SDL_Renderer* renderer, std::string path)
 	return mTexture != NULL;
 }
 
-bool LTexture::loadFromRenderedText(SDL_Renderer* renderer, TTF_Font *gFont, std::string textureText, SDL_Color textColor)
+bool LTexture::loadFromRenderedText(SDL_Renderer* renderer, TTF_Font *gFont,
+		std::string textureText, SDL_Color textColor)
 {
 	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Get rid of preexisting texture
@@ -169,7 +170,8 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* renderer, TTF_Font *gFont, std
 	SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
 	if (textSurface == NULL)
 	{
-		printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		logger().error() << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError()
+				<< logs::end;
 	}
 	else
 	{
@@ -177,13 +179,14 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* renderer, TTF_Font *gFont, std
 		mTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 		if (mTexture == NULL)
 		{
-			printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+			logger().error() << "Unable to create texture from rendered text! SDL Error: "
+					<< SDL_GetError() << logs::end;
 		}
 		else
 		{
 			//Get image dimensions
-			mWidth = textSurface->w;
-			mHeight = textSurface->h;
+			mWidth_ = textSurface->w;
+			mHeight_ = textSurface->h;
 		}
 
 		//Get rid of old surface
@@ -204,8 +207,8 @@ void LTexture::free()
 	{
 		SDL_DestroyTexture(mTexture);
 		mTexture = NULL;
-		mWidth = 0;
-		mHeight = 0;
+		mWidth_ = 0;
+		mHeight_ = 0;
 	}
 }
 
@@ -236,14 +239,13 @@ void LTexture::render(SDL_Renderer* gRenderer, int x, int y, SDL_Rect* clip, dou
 	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad =
-	{ x, y, mWidth, mHeight };
+	{ x, y, mWidth_, mHeight_ };
 
 	//Set clip rendering dimensions
 	if (clip != NULL)
 	{
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
-
 	}
 
 	//Render to screen
@@ -252,11 +254,11 @@ void LTexture::render(SDL_Renderer* gRenderer, int x, int y, SDL_Rect* clip, dou
 
 int LTexture::getWidth()
 {
-	return mWidth;
+	return mWidth_;
 }
 
 int LTexture::getHeight()
 {
-	return mHeight;
+	return mHeight_;
 }
 

@@ -21,7 +21,6 @@ void ActionManager::execute()
 	int size = 0;
 	while (!stop_)
 	{
-
 		lock();
 		size = actions_.size();
 		unlock();
@@ -52,6 +51,7 @@ void ActionManager::execute()
 		}
 	}
 
+	stop_ = false;
 	logger().info("ActionManager is stopped");
 }
 

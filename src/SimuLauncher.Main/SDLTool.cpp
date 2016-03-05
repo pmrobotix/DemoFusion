@@ -11,7 +11,7 @@
 
 pthread_t SDLTool::sdlThread = 0;
 
-std::list<SDLTask*> *SDLTool::listSDLTask = NULL;
+std::list<ISDLTask*> *SDLTool::listSDLTask = NULL;
 
 void SDLTool::checkThread(std::string str)
 {
@@ -19,7 +19,7 @@ void SDLTool::checkThread(std::string str)
 	if (!pthread_equal(myThread, sdlThread))
 	{
 		printf("Thread error : %s\n", str.c_str());
-		exit(0);
+		exit(-1);
 	}
 	else
 	{
@@ -31,10 +31,10 @@ void SDLTool::initSDLThread()
 {
 	sdlThread = pthread_self();
 
-	listSDLTask = new std::list<SDLTask*>();
+	listSDLTask = new std::list<ISDLTask*>();
 }
 
-void SDLTool::addSDLTask(SDLTask *task)
+void SDLTool::addSDLTask(ISDLTask *task)
 {
 	listSDLTask->push_back(task);
 

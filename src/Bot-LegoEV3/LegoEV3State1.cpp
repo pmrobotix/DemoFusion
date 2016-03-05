@@ -4,7 +4,7 @@
 
 
 IAutomateState*
-LegoEV3State1::execute(Robot& robot, void *data)
+LegoEV3State1::execute(Robot& , void *)
 {
 	logger().info() << "LegoEV3 Start 1" << logs::end;
 

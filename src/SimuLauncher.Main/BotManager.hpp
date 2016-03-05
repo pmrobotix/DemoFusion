@@ -16,14 +16,16 @@ class BotManager
 {
 
 private:
-	SDL_Thread* thread;
-	SDL_Thread* thread1;
-	SDL_Thread* threadledbartest;
+	SDL_Thread* idthread;
+	SDL_Thread* idthread1;
+	SDL_Thread* idthreadLedBarLegoEV3;
+	SDL_Thread* idthreadLedBarAPF;
 
 	bool start_;
 	bool stop_;
 
 public:
+
 	static inline const logs::Logger & logger()
 	{
 		static const logs::Logger & instance = logs::LoggerFactory::logger("BotManager");

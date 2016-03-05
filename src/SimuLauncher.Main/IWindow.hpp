@@ -1,8 +1,6 @@
-/*
- * IWindow.hpp
- *
- *  Created on: 4 févr. 2016
- *      Author: pmx
+/*!
+ * \file
+ * \brief Définition de l'interface IWindow.
  */
 
 #ifndef SIMULAUNCHER_MAIN_IWINDOW_HPP_
@@ -28,6 +26,9 @@ struct SDL_Renderer;
 
 class IWindow
 {
+private:
+	LTexture gBackgroundTexture;
+
 public:
 
 	//Focuses on window
@@ -351,11 +352,7 @@ protected:
 		pList_ = new std::list<Panel*>();
 	}
 
-private:
 
-
-
-	LTexture gBackgroundTexture;
 
 };
 

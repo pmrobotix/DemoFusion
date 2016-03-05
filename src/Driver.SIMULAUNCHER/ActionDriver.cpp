@@ -1,6 +1,6 @@
 #include "../Common/Action.Driver/AActionDriver.hpp"
 
-void AActionDriver::function(int value)
+void AActionDriver::function(int )
 {
 	//drivers...
 

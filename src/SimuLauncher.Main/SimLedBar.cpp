@@ -18,7 +18,6 @@ SimLedBar::SimLedBar(int x, int y, int w, int h, int nb) :
 		Panel(x, y, w, h) //on appelle le constructeur pere
 {
 	nb_ = nb;
-
 	currentTexture_ = new LTexture[nb_];
 }
 
@@ -26,8 +25,9 @@ void SimLedBar::setBit(int i, LedColor color)
 {
 	if (i < 0 || i >= nb_)
 	{
+		logger().error() << "Error SimLedBar::setBytes no color " << i << logs::end;
 		printf("Error SimLedBar::setBit invalid i= %d", i);
-		exit(0);
+		exit(-1);
 	}
 
 	switch (color)
@@ -45,8 +45,9 @@ void SimLedBar::setBit(int i, LedColor color)
 		currentTexture_[i] = redTexture_;
 		break;
 	default:
+		logger().error() << "Error SimLedBar::setBytes no color " << i << logs::end;
 		printf("Error SimLedBar::setBit no color %d", i);
-		exit(0);
+		exit(-1);
 	}
 }
 
@@ -73,8 +74,9 @@ void SimLedBar::setBytes(uint hex, LedColor color)
 				currentTexture_[i] = offTexture_;
 				break;
 			default:
+				logger().error() << "Error SimLedBar::setBytes no color " << i << logs::end;
 				printf("Error SimLedBar::setBytes no color %d\n", i);
-				exit(0);
+				exit(-1);
 			}
 		}
 		else
@@ -84,7 +86,7 @@ void SimLedBar::setBytes(uint hex, LedColor color)
 	}
 }
 
-void SimLedBar::handleEvent(SDL_Event& e, int xMouse, int yMouse)
+void SimLedBar::handleEvent(SDL_Event& , int , int )
 {
 }
 
@@ -104,22 +106,22 @@ bool SimLedBar::loadMedia(SDL_Renderer * renderer, std::string pathOff, std::str
 
 	if (!offTexture_.load(renderer, pathOff))
 	{
-		printf("Error : Failed to load offTexture_ !\n");
+		logger().error() << "Error : Failed to load offTexture_ !" << logs::end;
 		success = false;
 	}
 	if (!greenTexture_.load(renderer, pathGreen))
 	{
-		printf("Error : Failed to load greenTexture_ !\n");
+		logger().error() << "Error : Failed to load greenTexture_ !" << logs::end;
 		success = false;
 	}
 	if (!orangeTexture_.load(renderer, pathOrange))
 	{
-		printf("Error : Failed to load orangeTexture_ !\n");
+		logger().error() << "Error : Failed to load orangeTexture_ !" << logs::end;
 		success = false;
 	}
 	if (!redTexture_.load(renderer, pathRed))
 	{
-		printf("Error : Failed to load redTexture_ !\n");
+		logger().error() << "Error : Failed to load redTexture_ !" << logs::end;
 		success = false;
 	}
 

@@ -50,7 +50,7 @@ void SLedBarTest::run(Arguments *)
 	logger().info() << "start ActionManager..." << logs::end;
 	robot.actions().start();
 
-	robot.actions().ledBar().startSet(0,1);
+	robot.actions().ledBar().startSet(0, LED_GREEN);
 	//robot.actions.ledBar().startAlternate(10, 500000, 0x03, 0x01, LED_GREEN, true);
 /*
 	robot.actions.ledBar().startK2mil(2, 100000, LED_ORANGE, false);

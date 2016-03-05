@@ -12,22 +12,17 @@ struct SDL_Renderer;
 
 class Text: public Panel
 {
-public:
+private:
 
-	Text(int x, int y, int w, int h);
-
-	void handleEvent(SDL_Event& e, int xMouse, int yMouse);
-
-	void render(SDL_Renderer * renderer);
-
-	bool loadMedia(SDL_Renderer * renderer, std::string ttf_path, std::string text, int ptsize, SDL_Color textColor);
-
-	void setButtonListener(IButtonListener * l)
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref Text.
+	 */
+	static inline const logs::Logger & logger()
 	{
-		listener_ = l;
+		static const logs::Logger & instance = logs::LoggerFactory::logger("Text");
+		return instance;
 	}
 
-private:
 	IButtonListener* listener_;
 
 	//Globally used font
@@ -36,6 +31,22 @@ private:
 
 	bool pressleft_;
 	bool pressright_;
+
+public:
+
+	Text(int x, int y, int w, int h);
+
+	void handleEvent(SDL_Event& e, int xMouse, int yMouse);
+
+	void render(SDL_Renderer * renderer);
+
+	bool loadMedia(SDL_Renderer * renderer, std::string ttf_path, std::string text, int ptsize,
+			SDL_Color textColor);
+
+	void setButtonListener(IButtonListener * l)
+	{
+		listener_ = l;
+	}
 
 };
 

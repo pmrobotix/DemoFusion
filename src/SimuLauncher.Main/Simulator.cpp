@@ -40,8 +40,7 @@ Simulator::~Simulator()
 void Simulator::execute()
 {
 
-	//TODO //botm->launchRobotThreads();
-
+	botm->launchRobotThreads();
 
 
 	//Main loop flag
@@ -54,14 +53,16 @@ void Simulator::execute()
 
 	if (!initSDL())
 	{
-		printf("Error: Failed to initialize SDL!\n");
-		exit(0);
+		logger().error() << "Error: Failed to initialize SDL!" << logs::end;
+		//printf("Error: Failed to initialize SDL!\n");
+		exit(-1);
 	}
 
 	if (!createWindows())
 	{
-		printf("Error: Failed to initialize windows!\n");
-		exit(0);
+		logger().error() << "Error: Failed to initialize windows!" << logs::end;
+		//printf("Error: Failed to initialize windows!\n");
+		exit(-1);
 	}
 
 	//While application is running
@@ -85,12 +86,15 @@ void Simulator::execute()
 			secondWindow->handleEvent(e);
 			thirdWindow->handleEvent(e);
 
+			//DemoButtons
 			secondWindow->buttonHandleEvent(e);
 
 			//Pull up window
 			if (e.type == SDL_KEYDOWN)
 			{
+				//log key
 				cout << "key pressed: " << e.key.keysym.sym << endl;
+
 				switch (e.key.keysym.sym)
 				{
 				case SDLK_ESCAPE:
@@ -119,8 +123,8 @@ void Simulator::execute()
 
 		if (mainWindow == NULL)
 		{
-			printf("Window mainWindow is NULL!\n");
-			exit(0);
+			logger().error() << "Window mainWindow is NULL!" << logs::end;
+			exit(-1);
 		}
 		else
 		{
@@ -132,8 +136,8 @@ void Simulator::execute()
 		}
 		if (secondWindow == NULL)
 		{
-			printf("Window secondWindow is NULL!\n");
-			exit(0);
+			logger().error() << "Window secondWindow is NULL!" << logs::end;
+			exit(-1);
 		}
 		else
 		{
@@ -146,8 +150,8 @@ void Simulator::execute()
 
 		if (thirdWindow == NULL)
 		{
-			printf("Window thirdWindow is NULL!\n");
-			exit(0);
+			logger().error() << "Window thirdWindow is NULL!" << logs::end;
+			exit(-1);
 		}
 		else
 		{

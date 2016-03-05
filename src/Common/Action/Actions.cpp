@@ -6,9 +6,7 @@
 
 void Actions::start()
 {
-	//start action manager
 	actionManager_.start("ActionManager");
-
 	logger().debug("Actions is started");
 }
 
@@ -16,7 +14,6 @@ void Actions::stop()
 {
 	this->stopDevices();
 	this->waitAndStopManagers(); // wait end of tasks in managers
-
 	logger().debug("Actions is stopped");
 }
 
@@ -27,10 +24,13 @@ void Actions::stopDevices()
 
 void Actions::waitAndStopManagers()
 {
-	while (actionManager_.count() > 0) //TODO mettre un timeout !!
+	int time;
+	while (actionManager_.count() > 0)
 	{
 		logger().debug() << actionManager_.count() << logs::end;
 		usleep(50000);
+		time++;
+		if (time >= 20) break; //10 secondes
 	}
 	actionManager_.stop();
 

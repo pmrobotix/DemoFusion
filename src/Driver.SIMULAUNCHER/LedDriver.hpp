@@ -6,7 +6,7 @@
 
 #include "../Common/Action.Driver/ALedDriver.hpp"
 #include "../Common/Utils/Macro.hpp"
-#include "../SimuLauncher.Main/SDLTask.hpp"
+#include "../SimuLauncher.Main/ISDLTask.hpp"
 
 class SimLedBar;
 
@@ -46,7 +46,7 @@ private:
 	std::string text_;
 };
 
-class LedDriverSDLTask : public SDLTask
+class LedDriverSDLTask : public ISDLTask
 {
 public:
 	LedDriverSDLTask(LedDriver *leddriver);

@@ -1,8 +1,6 @@
-/*
- * IButtonListener.hpp
- *
- *  Created on: 30 janv. 2016
- *      Author: pmx
+/*!
+ * \file
+ * \brief Définition de l'interface IButtonListener.
  */
 
 #ifndef SIMULAUNCHER_MAIN_IBUTTONLISTENER_HPP_

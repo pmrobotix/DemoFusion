@@ -9,7 +9,7 @@
 #include <list>
 #include <string>
 
-#include "SDLTask.hpp"
+#include "ISDLTask.hpp"
 
 
 
@@ -19,14 +19,14 @@ public:
 
 	static pthread_t sdlThread;
 
-	static std::list<SDLTask*> *listSDLTask;
+	static std::list<ISDLTask*> *listSDLTask;
 
 
 	static void checkThread(std::string str);
 
 	static void initSDLThread();
 
-	static void addSDLTask(SDLTask *task);
+	static void addSDLTask(ISDLTask *task);
 
 	static void processSDLTasks();
 

@@ -10,22 +10,26 @@ class DemoButtons;
 
 class MainWindow: public IWindow
 {
-
-public:
-
-	bool loadContent(BotManager *botm);
-	virtual void render();
-
 private:
 
 	LTexture gBackgroundTextureSvg;
 	LTexture gBackgroundTexturePng;
 	LTexture gBackgroundTextureMain;
 
+public:
+
+	bool loadContent(BotManager *botm);
+	virtual void render();
+
+
 };
 
 class SecondWindow: public IWindow
 {
+
+private:
+
+	LTexture gBackgroundTextureMainWin1;
 
 public:
 
@@ -37,21 +41,19 @@ public:
 	virtual void render();
 
 
-private:
 
-
-	LTexture gBackgroundTextureMainWin1;
 };
 
 class ThirdWindow: public IWindow
 {
+private:
 
 public:
 
 	bool loadContent(BotManager *botm);
 	virtual void render();
 
-private:
+
 
 };
 
