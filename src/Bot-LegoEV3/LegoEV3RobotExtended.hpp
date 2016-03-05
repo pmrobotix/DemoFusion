@@ -17,21 +17,6 @@ public:
 		return instance;
 	}
 
-private:
-
-	static inline const logs::Logger & logger()
-	{
-		static const logs::Logger & instance = logs::LoggerFactory::logger(
-				"LegoEV3RobotExtended");
-		return instance;
-	}
-
-	LegoEV3ActionsExtended* actions_;
-
-	LegoEV3RobotExtended();
-
-public:
-
 	~LegoEV3RobotExtended()
 	{
 	}
@@ -46,6 +31,17 @@ public:
 
 	void begin();
 
+private:
+
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("LegoEV3RobotExtended");
+		return instance;
+	}
+
+	LegoEV3ActionsExtended* actions_;
+
+	LegoEV3RobotExtended();
 };
 
 #endif

@@ -9,6 +9,7 @@
 #include <cstdlib>
 
 #include "../Common/Utils/File.hpp"
+#include "SDLTool.hpp"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "Nanosvg/stb_image_write.h"
@@ -21,9 +22,10 @@ LTexture::LTexture()
 {
 	//Initialize
 	mTexture = NULL;
+	mImage = NULL;
 	mWidth = 0;
 	mHeight = 0;
-	mImage = NULL;
+
 }
 
 LTexture::~LTexture()
@@ -46,6 +48,8 @@ bool LTexture::load(SDL_Renderer* renderer, std::string path)
 
 bool LTexture::loadFromSVG(SDL_Renderer* renderer, std::string path)
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
+
 	//Get rid of preexisting texture
 	free();
 
@@ -111,6 +115,8 @@ bool LTexture::loadFromSVG(SDL_Renderer* renderer, std::string path)
 
 bool LTexture::loadFromFile(SDL_Renderer* renderer, std::string path)
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
+
 	//Get rid of preexisting texture
 	free();
 
@@ -155,6 +161,7 @@ bool LTexture::loadFromFile(SDL_Renderer* renderer, std::string path)
 
 bool LTexture::loadFromRenderedText(SDL_Renderer* renderer, TTF_Font *gFont, std::string textureText, SDL_Color textColor)
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Get rid of preexisting texture
 	free();
 
@@ -189,7 +196,7 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* renderer, TTF_Font *gFont, std
 
 void LTexture::free()
 {
-
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	SDL_FreeSurface(mImage);
 
 	//Free texture if it exists
@@ -204,18 +211,21 @@ void LTexture::free()
 
 void LTexture::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Modulate texture rgb
 	SDL_SetTextureColorMod(mTexture, red, green, blue);
 }
 
 void LTexture::setBlendMode(SDL_BlendMode blending)
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Set blending function
 	SDL_SetTextureBlendMode(mTexture, blending);
 }
 
 void LTexture::setAlpha(Uint8 alpha)
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Modulate texture alpha
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
@@ -223,6 +233,7 @@ void LTexture::setAlpha(Uint8 alpha)
 void LTexture::render(SDL_Renderer* gRenderer, int x, int y, SDL_Rect* clip, double angle,
 		SDL_Point* center, SDL_RendererFlip flip)
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad =
 	{ x, y, mWidth, mHeight };

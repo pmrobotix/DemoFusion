@@ -20,13 +20,7 @@ public:
 
 	virtual inline ~Panel()
 	{
-
 	}
-	/*
-	void setWindow(IWindow * w)
-	{
-		window_ = w;
-	}*/
 
 	virtual void handleEvent(SDL_Event& e, int xMouse, int yMouse) = 0;
 

@@ -1,3 +1,5 @@
+#include <cstdio>
+
 #include "Simulator.hpp"
 
 
@@ -5,7 +7,7 @@ using namespace std;
 
 int main(int, char** )
 {
-	//printf("start");
+	printf("start\n");
 
 	Simulator &sim = Simulator::instance();
 

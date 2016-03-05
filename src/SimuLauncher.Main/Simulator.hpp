@@ -1,10 +1,13 @@
 #ifndef SIMULAUNCHER_MAIN_SIMULATOR_HPP_
 #define SIMULAUNCHER_MAIN_SIMULATOR_HPP_
 
-#include "LWindows.hpp"
 
-//Total number of windows
-const int TOTAL_WINDOWS = 3;
+class BotManager;
+class MainWindow;
+class SecondWindow;
+class ThirdWindow;
+
+
 
 class Simulator
 {
@@ -29,9 +32,13 @@ public:
 
 	~Simulator();
 
+	void enableLedDriver();
+
+
 	MainWindow *mainWindow;
 	SecondWindow *secondWindow;
 	ThirdWindow *thirdWindow;
+	BotManager *botm;
 
 private:
 

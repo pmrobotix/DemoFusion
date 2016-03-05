@@ -16,11 +16,14 @@ void logs::LoggerFactory::initialize()
 
 	add(logs::Level::ERROR, "", "console");
 
-
 	//add(logs::Level::INFO, "Robot", "console");
 	add(logs::Level::INFO, "BotManager", "console");
 	add(logs::Level::INFO, "LegoEV3RobotExtended", "console");
 	add(logs::Level::INFO, "LegoEV3LedBarTest", "console");
+	add(logs::Level::INFO, "LegoEV3State1", "console");
+	add(logs::Level::INFO, "APF9328RobotExtended", "console");
+	add(logs::Level::INFO, "APF9328LedBarTest", "console");
+	add(logs::Level::INFO, "APF9328State1", "console");
 
 
 }

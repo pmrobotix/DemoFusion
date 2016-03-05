@@ -1,8 +1,8 @@
 #ifndef LEDBAR_HPP_
 #define LEDBAR_HPP_
 
-#include <bits/stringfwd.h>
 #include <unistd.h>
+#include <string>
 
 #include "../../Log/LoggerFactory.hpp"
 #include "../Action.Driver/ALedDriver.hpp"
@@ -87,7 +87,7 @@ private:
 	/*!
 	 * \brief Color de la led a appliquer.
 	 */
-	uint color_;
+	LedColor color_;
 
 	/*!
 	 * \brief Nombre de clignotement à faire.
@@ -160,11 +160,11 @@ public:
 		return position_;
 	}
 
-	inline void color(uint value)
+	inline void color(LedColor value)
 	{
 		this->color_ = value;
 	}
-	inline uint color() const
+	inline LedColor color() const
 	{
 		return color_;
 	}
@@ -215,7 +215,7 @@ public:
 	 * \param position La position de la led.
 	 * \param color La couleur de la led, 0:OFF, 1:GREEN, and optional 2:RED 3:ORANGE)
 	 */
-	void set(int position, uint color);
+	void set(int position, LedColor color);
 
 	/*!
 	 * \brief Active une led spécifique.
@@ -223,7 +223,7 @@ public:
 	 */
 	inline void setOn(int position)
 	{
-		this->set(position, 1);
+		this->set(position, LED_GREEN);
 	}
 
 	/*!
@@ -232,13 +232,13 @@ public:
 	 */
 	inline void setOff(int position)
 	{
-		this->set(position, 0);
+		this->set(position, LED_OFF);
 	}
 
 	/*!
 	 * \brief Allume/eteint les leds définit par hexValue, max = 0xFF.
 	 */
-	void flash(uint hexPosition, uint color = 1);
+	void flash(uint hexPosition, LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Eteint toutes leds.
@@ -248,28 +248,28 @@ public:
 	/*!
 	 * \brief Allume toutes leds.
 	 */
-	void flashAll(uint color = 1);
+	void flashAll(LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Clignote toutes les leds nb fois.
 	 */
-	void blink(uint nb, uint timeus, uint color = 1);
+	void blink(uint nb, uint timeus, LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Clignote une led nb fois pendant timeus.
 	 */
-	void blinkPin(uint nb, uint timeus, int position, uint color = 1);
+	void blinkPin(uint nb, uint timeus, int position, LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Clignote toutes les leds nb fois sur les 2 valeurs hex val1 et val2.
 	 */
 	void alternate(uint nb, uint timeus, uint beginVal, uint endVal,
-			uint beginColor = 1);
+			LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Clignote toutes les leds nb fois sur les 2 valeurs hex val1 et val2.
 	 */
-	void k2mil(uint nb, uint timeus, uint color = 1);
+	void k2mil(uint nb, uint timeus, LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Lance l'action de changer le statut d'une led.
@@ -277,7 +277,7 @@ public:
 	 * \param position La position de la led (de 0 à 7).
 	 * \param status Le statut de la led.
 	 */
-	void startSet(ushort position, uint color);
+	void startSet(ushort position, LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Lance l'action d'éteindre toutes les leds.
@@ -299,23 +299,23 @@ public:
 	 *
 	 */
 	void startAlternate(uint nb, uint timeus, uint hexValue, uint hexValueNext,
-			uint color = 1, bool wait = false);
+			LedColor color = LED_GREEN, bool wait = false);
 
 	/*!
 	 * \brief Lance l'action de faire clignoter toutes les leds nb fois tous les timeus.
 	 */
-	void startBlink(uint nb, uint timeus, uint color, bool wait);
+	void startBlink(uint nb, uint timeus, LedColor color, bool wait);
 
 	/*!
 	 * \brief Lance l'action de faire clignoter une led nb fois tous les timeus.
 	 */
-	void startBlinkPin(uint nb, uint timeus, int position, uint color,
+	void startBlinkPin(uint nb, uint timeus, int position, LedColor color,
 			bool wait);
 
 	/*!
 	 * \brief Lance l'action d'allumer alternativement les leds à la "K2000".
 	 */
-	void startK2mil(uint nb, uint timeus, uint color, bool wait);
+	void startK2mil(uint nb, uint timeus, LedColor color, bool wait);
 
 	/*!
 	 * \brief Active une led spécifique.

@@ -1,32 +1,30 @@
 #include <iostream>
 
 #include "BotManager.hpp"
-#include "PlayButtonListener.hpp"
+#include "PlayLedBarButtonListener.hpp"
 
-PlayButtonListener::PlayButtonListener(BotManager * botm)
+PlayLedBarButtonListener::PlayLedBarButtonListener(BotManager * botm)
 {
 	botm_ = botm;
 }
 
-void PlayButtonListener::leftButtonPressed()
+void PlayLedBarButtonListener::leftButtonPressed()
 {
 	//std::cout << "PlayButtonListener leftButtonPressed"  << std::endl;
 }
 
-void PlayButtonListener::rightButtonPressed()
+void PlayLedBarButtonListener::rightButtonPressed()
 {
 	//std::cout << "PlayButtonListener rightButtonPressed" << std::endl;
 }
 
-void PlayButtonListener::leftButtonPressedAndRelease()
+void PlayLedBarButtonListener::leftButtonPressedAndRelease()
 {
 	//std::cout << "PlayButtonListener leftButtonPressedAndRelease"<< std::endl;
-
-
-	botm_->start(true);
+	botm_->launchLedBarTest();
 }
 
-void PlayButtonListener::rightButtonPressedAndRelease()
+void PlayLedBarButtonListener::rightButtonPressedAndRelease()
 {
 	//std::cout << "PlayButtonListener rightButtonPressedAndRelease" << std::endl;
 }

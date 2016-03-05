@@ -26,19 +26,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Bot-BigPMX</name>
+			<name>Bot-APF9328</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-BigPMX</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-APF9328</locationURI>
 		</link>
 		<link>
 			<name>Bot-LegoEV3</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-LegoEV3</locationURI>
-		</link>
-		<link>
-			<name>Bot-SmallPMX</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/src/Bot-SmallPMX</locationURI>
 		</link>
 		<link>
 			<name>Common</name>

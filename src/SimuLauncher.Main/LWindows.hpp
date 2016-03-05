@@ -48,7 +48,9 @@ class ThirdWindow: public IWindow
 
 public:
 
+	bool loadContent(BotManager *botm);
 	virtual void render();
+
 private:
 
 };

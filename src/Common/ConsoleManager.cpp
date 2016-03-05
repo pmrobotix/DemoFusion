@@ -167,6 +167,7 @@ void ConsoleManager::run(uint nTest, Arguments *args)
 
 void ConsoleManager::executeTest(uint nTest, Arguments *args)
 {
+
 	if (nTest > 0 && nTest <= tests_.size())
 	{
 		tests_[nTest - 1]->run(args);

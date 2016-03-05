@@ -6,6 +6,7 @@
 #include <SDL2/SDL_hints.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_video.h>
 #include <unistd.h>
 #include <cstdio>
@@ -14,6 +15,10 @@
 
 #include "BotManager.hpp"
 #include "IWindow.hpp"
+#include "LWindows.hpp"
+#include "SDLTool.hpp"
+
+
 
 using namespace std;
 
@@ -22,7 +27,11 @@ Simulator::Simulator()
 	mainWindow = NULL;
 	secondWindow = NULL;
 	thirdWindow = NULL;
+	botm = new BotManager();
+
+	SDLTool::initSDLThread();
 }
+
 
 Simulator::~Simulator()
 {
@@ -30,6 +39,11 @@ Simulator::~Simulator()
 
 void Simulator::execute()
 {
+
+	//TODO //botm->launchRobotThreads();
+
+
+
 	//Main loop flag
 	bool quit = false;
 
@@ -53,6 +67,11 @@ void Simulator::execute()
 	//While application is running
 	while (!quit)
 	{
+
+		//execute les taches des drivers
+		SDLTool::processSDLTasks();
+
+
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
 		{
@@ -158,13 +177,16 @@ void Simulator::execute()
 		{
 			quit = true;
 		}
-		usleep(1000); //todo framerate ?
+		usleep(2000); //todo framerate ?
 	}
 
 }
 
 bool Simulator::initSDL()
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
+
+
 	//Initialization flag
 	bool success = true;
 
@@ -203,10 +225,12 @@ bool Simulator::initSDL()
 
 bool Simulator::createWindows()
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
+
 	//Initialization flag
 	bool success = true;
 
-	BotManager *botm = new BotManager();
+	//BotManager *botm = new BotManager();
 
 	mainWindow = new MainWindow();
 	mainWindow->focus();
@@ -239,7 +263,7 @@ bool Simulator::createWindows()
 		if (!secondWindow->loadContent(botm))
 		{
 			success = false;
-			printf("Error: Window mainWindow could not load content!\n");
+			printf("Error: Window secondWindow could not load content!\n");
 		}
 	}
 
@@ -249,6 +273,14 @@ bool Simulator::createWindows()
 	{
 		printf("Error: Window thirdWindow could not be created!\n");
 		success = false;
+	}
+	else
+	{
+		if (!thirdWindow->loadContent(botm))
+		{
+			success = false;
+			printf("Error: Window thirdWindow could not load content!\n");
+		}
 	}
 
 	return success;

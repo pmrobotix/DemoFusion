@@ -5,10 +5,31 @@
 
 #include "../Utils/Macro.hpp"
 
-#define LED_OFF 0
-#define LED_GREEN 1
-#define LED_RED 2
-#define LED_ORANGE 3
+
+/*!
+ * \brief Enumeration of the different color of leds.
+ */
+enum LedColor
+{
+	/*!
+	 * \brief color LED OFF.
+	 */
+	LED_OFF,
+	/*!
+	 * \brief led color green.
+	 */
+	LED_GREEN,
+	/*!
+	 * \brief led color red.
+	 */
+	LED_RED,
+	/*!
+	 * \brief led color orange.
+	 */
+	LED_ORANGE
+
+};
+
 
 class ALedDriver
 {
@@ -32,7 +53,7 @@ public:
 	 * \param color
 	 * 				The color of the led.
 	 */
-	virtual void setBit(int index, int color) = 0;
+	virtual void setBit(int index, LedColor color) = 0;
 
 	/*!
 	 * \brief Set color where hex=1. Set 0 where hex=0.
@@ -42,7 +63,7 @@ public:
 	 * \param color
 	 * 				The color of the led setted to 1 in hex.
 	 */
-	virtual void setBytes(uint hex, int color) = 0;
+	virtual void setBytes(uint hex, LedColor color) = 0;
 
 	/*!
 	 * \brief Destructor.

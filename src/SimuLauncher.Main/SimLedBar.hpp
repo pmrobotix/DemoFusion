@@ -11,15 +11,28 @@
 #include <SDL2/SDL_rect.h>
 #include <string>
 
+#include "../Common/Action.Driver/ALedDriver.hpp"
+#include "../Common/Utils/Macro.hpp"
 #include "LTexture.hpp"
 #include "Panel.hpp"
+
+class LTexture;
 
 class SimLedBar: public Panel
 {
 
 public:
 
-	SimLedBar(int x, int y, int w, int h);
+	SimLedBar(int x, int y, int w, int h, int nb);
+
+	~SimLedBar()
+	{
+		//Free loaded images
+		offTexture_.free();
+		greenTexture_.free();
+		orangeTexture_.free();
+		redTexture_.free();
+	}
 
 	void handleEvent(SDL_Event& e, int xMouse, int yMouse);
 
@@ -28,9 +41,17 @@ public:
 	bool loadMedia(SDL_Renderer * renderer, std::string pathOff, std::string pathGreen, std::string pathRed,
 			std::string pathOrange);
 
+	void setBit(int index, LedColor color);
+	void setBytes(uint hex, LedColor color);
+
 private:
+	LTexture *currentTexture_;
 	LTexture offTexture_;
+	LTexture greenTexture_;
+	LTexture orangeTexture_;
+	LTexture redTexture_;
 	SDL_Rect spriteClip_;
+	int nb_;
 
 };
 

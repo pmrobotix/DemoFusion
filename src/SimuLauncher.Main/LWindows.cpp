@@ -10,7 +10,9 @@
 #include "Button.hpp"
 #include "DemoButtons.hpp"
 #include "PlayButtonListener.hpp"
+#include "PlayLedBarButtonListener.hpp"
 #include "ResetButtonListener.hpp"
+#include "SDLTool.hpp"
 #include "StopButtonListener.hpp"
 #include "Text.hpp"
 
@@ -78,6 +80,7 @@ bool MainWindow::loadContent(BotManager *botm)
 
 void MainWindow::render()
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	if (!isMinimized())
 	{
 		//Initialize renderer color
@@ -133,6 +136,7 @@ bool SecondWindow::loadContent(BotManager *botm)
 
 void SecondWindow::render()
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Clear screen
 	SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(mRenderer);
@@ -154,8 +158,26 @@ void SecondWindow::buttonHandleEvent(SDL_Event& e)
 	dbuttons->handleEvent(&e);
 }
 
+bool ThirdWindow::loadContent(BotManager *botm)
+{
+	bool success = true;
+
+	//Play button for LedBartest
+	Button * playButton = new Button(70, 00, 64, 64);
+	playButton->loadMediaButton(mRenderer, "./resources/IHM/play-button4_64_green.svg",
+			"./resources/IHM/play-button4_64_green_over.svg",
+			"./resources/IHM/play-button4_64_green.svg",
+			"./resources/IHM/play-button4_64_green.svg");
+	this->addPanel(playButton);
+	PlayLedBarButtonListener * playListener = new PlayLedBarButtonListener(botm);
+	playButton->setButtonListener(playListener);
+
+	return success;
+}
+
 void ThirdWindow::render()
 {
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	//Clear screen
 	SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(mRenderer);

@@ -18,7 +18,7 @@ class BotManager
 private:
 	SDL_Thread* thread;
 	SDL_Thread* thread1;
-	SDL_Thread* thread2;
+	SDL_Thread* threadledbartest;
 
 	bool start_;
 	bool stop_;
@@ -35,6 +35,10 @@ public:
 	~BotManager();
 
 	void reset();
+
+	void launchLedBarTest();
+
+	void launchRobotThreads();
 
 	void start(bool s)
 	{

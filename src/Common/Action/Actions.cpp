@@ -22,7 +22,7 @@ void Actions::stop()
 
 void Actions::stopDevices()
 {
- //TODO Actions::stopDevices()
+//default devices
 }
 
 void Actions::waitAndStopManagers()

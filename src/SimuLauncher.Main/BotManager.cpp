@@ -5,7 +5,6 @@
  *      Author: pmx
  */
 
-
 #include "BotManager.hpp"
 
 #include <SDL2/SDL_thread.h>
@@ -13,38 +12,45 @@
 #include <cstdio>
 #include <string>
 
+#include "../Bot-APF9328/APF9328LedBarTest.hpp"
+#include "../Bot-APF9328/APF9328RobotExtended.hpp"
 #include "../Bot-LegoEV3/LegoEV3LedBarTest.hpp"
 #include "../Bot-LegoEV3/LegoEV3RobotExtended.hpp"
 #include "../Common/Arguments.hpp"
 #include "../Common/ConsoleManager.hpp"
 #include "../Common/Robot.hpp"
 #include "../Log/Logger.hpp"
+#include "SDLTool.hpp"
 
-int threadFunctionLegoEV3RobotExtended(void* data)
+int threadLegoEV3RobotExtended(void* data)
 {
+
 	BotManager* botm = (BotManager*) data;
+//sleep(1);
+	LegoEV3RobotExtended &robotlegoev3 = LegoEV3RobotExtended::instance();
+	APF9328RobotExtended &robotapf = APF9328RobotExtended::instance();
+
+	botm->logger().info() << "Starting threadLegoEV3RobotExtended... " << botm->start()
+			<< logs::end;
+
 	while (!botm->start())
 	{
 		usleep(100000);
 	}
 
-	botm->logger().info() << "Running threadFunctionLegoEV3RobotExtended " << botm->start()
-			<< logs::end;
-	//printf("Running threadFunctionLegoEV3RobotExtended with value = %d\n", botm->start());
-
-	LegoEV3RobotExtended &robot = LegoEV3RobotExtended::instance();
+	botm->logger().info() << "Running threadLegoEV3RobotExtended " << botm->start() << logs::end;
 
 	//add specific tests for this robot
-	robot.getConsoleManager().add(new LegoEV3LedBarTest());
+	robotlegoev3.getConsoleManager().add(new LegoEV3LedBarTest());
 
-	Arguments &args = robot.getArgs();
+	Arguments &args = robotlegoev3.getArgs();
 
-	args["type"] = "t";
-	args['n'].set(true);
-	args['n']["num"] = "1"; //LegoEV3LedBarTest
+	args["type"] = "m";
+	//args['n'].set(true);
+	//args['n']["num"] = "1"; //LegoEV3LedBarTest
 
 	//launch automate
-	robot.begin();
+	robotlegoev3.begin();
 
 	while (!botm->stop())
 	{
@@ -56,9 +62,12 @@ int threadFunctionLegoEV3RobotExtended(void* data)
 	return 0;
 }
 
-int threadFunctionBRobotExtended(void* data)
+int threadAPF9328RobotExtended(void* data)
 {
 	BotManager* botm = (BotManager*) data;
+
+	botm->logger().info() << "Starting threadAPF9328RobotExtended... " << botm->start()
+			<< logs::end;
 	while (!botm->start())
 	{
 		usleep(100000);
@@ -74,22 +83,40 @@ int threadFunctionBRobotExtended(void* data)
 	return 0;
 }
 
-int threadFunctionSRobotExtended(void* data)
+int threadLedBarTest(void* data)
 {
 	BotManager* botm = (BotManager*) data;
-	while (!botm->start())
-	{
-		usleep(100000);
-	}
+	LegoEV3RobotExtended &robotlegoev3 = LegoEV3RobotExtended::instance();
+	APF9328RobotExtended &robotapf = APF9328RobotExtended::instance();
 
-	//printf("Running threadFunctionSRobotExtended with value = %d\n", botm->start());
+	botm->logger().info() << "Starting threadLedBarTest... " << botm->start() << logs::end;
 
-	while (!botm->stop())
+	//add specific tests for this robot
+	robotlegoev3.getConsoleManager().add(new LegoEV3LedBarTest());
 	{
-		//DO something
-		usleep(100000);
+		Arguments &args = robotlegoev3.getArgs();
+		args["type"] = "t";
+		args['n'].set(true);
+		args['n']["num"] = "1"; //LegoEV3LedBarTest
 	}
-	//printf("End threadFunctionSRobotExtended.\n");
+	//launch automate
+	botm->logger().info() << "robotlegoev3.begin() "  << logs::end;
+	robotlegoev3.begin();
+
+
+
+	robotapf.getConsoleManager().add(new APF9328LedBarTest());
+	{
+		Arguments &args = robotapf.getArgs();
+		args["type"] = "t";
+		args['n'].set(true);
+		args['n']["num"] = "1"; //APF9328LedBarTest
+	}
+	//launch automate
+	botm->logger().info() << "robotapf.begin() "  << logs::end;
+	robotapf.begin();
+
+	botm->logger().info() << "End threadLedBarTest. "  << logs::end;
 	return 0;
 }
 
@@ -105,24 +132,34 @@ BotManager::BotManager()
 	start_ = false;
 	stop_ = false;
 
-	//Run the threads with different robots
-	thread = SDL_CreateThread(&threadFunctionLegoEV3RobotExtended, "LegoEV3RobotExtended",
-			(void*) this);
-
-	//int data1 = 102;
-	thread1 = SDL_CreateThread(&threadFunctionBRobotExtended, "BRobotExtended", (void*) this);
-
-	//int data2 = 103;
-	thread2 = SDL_CreateThread(&threadFunctionSRobotExtended, "SRobotExtended", (void*) this);
-
+	thread = NULL;
+	thread1 = NULL;
+	threadledbartest = NULL;
 }
 
 BotManager::~BotManager()
 {
-
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
 	SDL_WaitThread(thread, NULL);
 	SDL_WaitThread(thread1, NULL);
-	SDL_WaitThread(thread2, NULL);
+	SDL_WaitThread(threadledbartest, NULL);
 
 }
 
+void BotManager::launchRobotThreads()
+{
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
+	//Run the threads with different robots
+	thread = SDL_CreateThread(&threadLegoEV3RobotExtended, "threadLegoEV3RobotExtended",
+			(void*) this);
+
+	thread1 = SDL_CreateThread(&threadAPF9328RobotExtended, "threadAPF9328RobotExtended",
+			(void*) this);
+}
+
+void BotManager::launchLedBarTest()
+{
+	SDLTool::checkThread(__PRETTY_FUNCTION__);
+
+	threadledbartest = SDL_CreateThread(&threadLedBarTest, "threadLedBarTest", (void*) this);
+}
