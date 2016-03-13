@@ -292,7 +292,6 @@ bool Simulator::createWindows()
 
 void Simulator::closeSDL()
 {
-
 	mainWindow->free();
 	secondWindow->free();
 	thirdWindow->free();

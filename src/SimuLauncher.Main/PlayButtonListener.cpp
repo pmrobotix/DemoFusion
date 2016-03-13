@@ -1,7 +1,6 @@
-#include <iostream>
+#include "PlayButtonListener.hpp"
 
 #include "BotManager.hpp"
-#include "PlayButtonListener.hpp"
 
 PlayButtonListener::PlayButtonListener(BotManager * botm)
 {

@@ -25,9 +25,9 @@ private:
 public:
 
 	/*!
-	 * \brief Liste des gpio à utiliser pour BIG-PMX.
+	 * \brief Liste des gpio à utiliser pour ce robot.
 	 */
-	int gpio[NB_GPIO]; //TODO faire un malloc dynamique avec nb
+	int *gpio;
 
 	uint hexa;
 

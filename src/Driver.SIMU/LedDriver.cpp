@@ -18,6 +18,8 @@ LedDriver::LedDriver(int nb)
 {
 	hexa = 0;
 	nb_ = nb;
+	gpio = new int[nb_];
+
 	for (int i = 0; i < nb_; i++)
 	{
 		gpio[i] = 0;

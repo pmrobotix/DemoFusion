@@ -5,7 +5,6 @@
 #include "../Common/Action/ButtonBar.hpp"
 #include "../Common/Action/LedBar.hpp"
 
-
 class LegoEV3ActionsExtended: public Actions
 {
 private:
@@ -20,11 +19,15 @@ private:
 	 */
 	ButtonBar buttonbar_;
 
-
 public:
-	LegoEV3ActionsExtended(std::string botId) :
-			ledbar_(botId, *this, 2), buttonbar_(*this)
+	LegoEV3ActionsExtended(std::string botId)
+			: ledbar_(botId, *this, 2), buttonbar_(*this)
 	{
+	}
+
+	~LegoEV3ActionsExtended()
+	{
+		printf("~LegoEV3ActionsExtended()\n");
 	}
 
 	/*!

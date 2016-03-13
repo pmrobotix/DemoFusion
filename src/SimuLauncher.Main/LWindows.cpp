@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <list>
 
+#include "../Log/Logger.hpp"
 #include "BotManager.hpp"
 #include "Button.hpp"
 #include "DemoButtons.hpp"
@@ -22,23 +23,10 @@ bool MainWindow::loadContent(BotManager *botm)
 
 	if (!gBackgroundTextureMain.load(mRenderer, "./resources/ground_2016_1400x1027px.svg"))
 	{
-		printf("Error: Failed to load background texture image ground_2016_1400x1027px.svg!\n");
+		logger().error() << "Error: Failed to load background texture image ground_2016_1400x1027px.svg!" << logs::end;
 		success = false;
 	}
-	/*
-	 if (!gBackgroundTexturePng.loadFromFile(mRenderer, "./resources/svg.png"))
-	 {
-	 printf("Error: Failed to load background texture image!\n");
-	 success = false;
-	 }
 
-	 //Load background texture on window n°0
-	 if (!gBackgroundTextureSvg.loadFromSVG(mRenderer, "./resources/23.svg"))
-	 {
-	 printf("Error: Failed to load background texture svg!\n");
-	 success = false;
-	 }
-	 */
 	//text
 	Text * text = new Text(50, 0, 0, 0);
 	SDL_Color textColor =
@@ -92,17 +80,6 @@ void MainWindow::render()
 		{	0, 40, 1400, 1027}; //rect dans l'image
 		//gBackgroundTextureMain.setAlpha(100);
 		gBackgroundTextureMain.render(mRenderer, 150, 0, &stretchRect);
-		/*
-		 SDL_Rect stretchRectsvg;
-		 stretchRectsvg =
-		 {	0, 0, gBackgroundTextureSvg.getWidth(), gBackgroundTextureSvg.getHeight()};
-		 gBackgroundTextureSvg.setAlpha(255);
-		 gBackgroundTextureSvg.render(mRenderer, 0, 0, &stretchRectsvg);
-
-		 //Render front blended
-		 gBackgroundTexturePng.setAlpha(230);
-		 gBackgroundTexturePng.render(mRenderer, 0, 0);
-		 */
 
 		for (std::list<Panel*>::iterator iter = pList_->begin(); iter != pList_->end(); iter++)
 		{
@@ -122,15 +99,14 @@ bool SecondWindow::loadContent(BotManager *)
 
 	if (!gBackgroundTextureMainWin1.loadFromFile(mRenderer, "./resources/background.png"))
 	{
-		printf("Error: Failed to load background texture image!\n");
+		logger().error() << "Error: Failed to load background texture image!" << logs::end;
 		success = false;
 	}
 	if (!dbuttons->loadMediaButton(mRenderer, "./resources/button100.png"))
 	{
-		printf("Error: Failed to load media!\n");
+		logger().error() << "Error: Failed to load media!" << logs::end;
 		success = false;
 	}
-
 	return success;
 }
 

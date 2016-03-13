@@ -9,16 +9,17 @@
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_hints.h>
+#include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_video.h>
-#include <cstdio>
-#include <iostream>
 #include <list>
 #include <sstream>
 #include <string>
 
+#include "../Log/Logger.hpp"
+#include "../Log/LoggerFactory.hpp"
 #include "LTexture.hpp"
 #include "Panel.hpp"
 
@@ -28,6 +29,12 @@ class IWindow
 {
 private:
 	LTexture gBackgroundTexture;
+
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("IWindow");
+		return instance;
+	}
 
 public:
 
@@ -86,7 +93,7 @@ public:
 
 	//functions which can be surcharged
 
-	virtual void free()
+	void free()
 	{
 		SDL_DestroyRenderer(mRenderer);
 
@@ -111,7 +118,7 @@ public:
 		if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0") < 0)
 		{
 			success = false;
-			std::cout << "Error: Failed to set Render Scale Quality" << std::endl; //TODO LOG
+			logger().error() << "Error: Failed to set Render Scale Quality" << logs::end;
 			return success;
 		}
 
@@ -129,7 +136,8 @@ public:
 					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 			if (mRenderer == NULL)
 			{
-				printf("Error: Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				logger().error() << "Error: Renderer could not be created! SDL Error: "
+						<< SDL_GetError() << logs::end;
 				SDL_DestroyWindow(mWindow);
 				mWindow = NULL;
 				success = false;
@@ -147,17 +155,19 @@ public:
 		else
 		{
 			success = false;
-			printf("Error: Window could not be created! SDL Error: %s\n", SDL_GetError());
+			logger().error() << "Error: Window could not be created! SDL Error: " << SDL_GetError()
+					<< logs::end;
 			return success;
 		}
-		printf("Window initSDL => ID=%d\n", mWindowID);
+		logger().debug() << "Window initSDL => ID= " << mWindowID << logs::end;
 		return success;
 	}
 
 	virtual void handleEvent(SDL_Event& e)
 	{
 		//If an event was detected for this window
-		if (e.window.windowID != mWindowID) return;
+		if (e.window.windowID != mWindowID)
+			return;
 
 		if (e.type == SDL_WINDOWEVENT)
 		{
@@ -166,72 +176,72 @@ public:
 
 			switch (e.window.event)
 			{
-			//Window appeared
-			case SDL_WINDOWEVENT_SHOWN:
-				mShown = true;
-				break;
+				//Window appeared
+				case SDL_WINDOWEVENT_SHOWN:
+					mShown = true;
+					break;
 
-				//Window disappeared
-			case SDL_WINDOWEVENT_HIDDEN:
-				mShown = false;
-				break;
+					//Window disappeared
+				case SDL_WINDOWEVENT_HIDDEN:
+					mShown = false;
+					break;
 
-				//Get new dimensions and repaint
-			case SDL_WINDOWEVENT_SIZE_CHANGED:
-				mWidth = e.window.data1;
-				mHeight = e.window.data2;
-				SDL_RenderPresent(mRenderer);
-				break;
+					//Get new dimensions and repaint
+				case SDL_WINDOWEVENT_SIZE_CHANGED:
+					mWidth = e.window.data1;
+					mHeight = e.window.data2;
+					SDL_RenderPresent(mRenderer);
+					break;
 
-				//Repaint on expose
-			case SDL_WINDOWEVENT_EXPOSED:
-				SDL_RenderPresent(mRenderer);
-				break;
+					//Repaint on expose
+				case SDL_WINDOWEVENT_EXPOSED:
+					SDL_RenderPresent(mRenderer);
+					break;
 
-				//Mouse enter
-			case SDL_WINDOWEVENT_ENTER:
-				mMouseFocus = true;
-				updateCaption = true;
-				break;
+					//Mouse enter
+				case SDL_WINDOWEVENT_ENTER:
+					mMouseFocus = true;
+					updateCaption = true;
+					break;
 
-				//Mouse exit
-			case SDL_WINDOWEVENT_LEAVE:
-				mMouseFocus = false;
-				updateCaption = true;
-				break;
+					//Mouse exit
+				case SDL_WINDOWEVENT_LEAVE:
+					mMouseFocus = false;
+					updateCaption = true;
+					break;
 
-				//Keyboard focus gained
-			case SDL_WINDOWEVENT_FOCUS_GAINED:
-				mKeyboardFocus = true;
-				updateCaption = true;
-				break;
+					//Keyboard focus gained
+				case SDL_WINDOWEVENT_FOCUS_GAINED:
+					mKeyboardFocus = true;
+					updateCaption = true;
+					break;
 
-				//Keyboard focus lost
-			case SDL_WINDOWEVENT_FOCUS_LOST:
-				mKeyboardFocus = false;
-				updateCaption = true;
-				break;
+					//Keyboard focus lost
+				case SDL_WINDOWEVENT_FOCUS_LOST:
+					mKeyboardFocus = false;
+					updateCaption = true;
+					break;
 
-				//Window minimized
-			case SDL_WINDOWEVENT_MINIMIZED:
-				mMinimized = true;
-				break;
+					//Window minimized
+				case SDL_WINDOWEVENT_MINIMIZED:
+					mMinimized = true;
+					break;
 
-				//Window maxized
-			case SDL_WINDOWEVENT_MAXIMIZED:
-				mMinimized = false;
-				break;
+					//Window maxized
+				case SDL_WINDOWEVENT_MAXIMIZED:
+					mMinimized = false;
+					break;
 
-				//Window restored
-			case SDL_WINDOWEVENT_RESTORED:
-				mMinimized = false;
-				break;
+					//Window restored
+				case SDL_WINDOWEVENT_RESTORED:
+					mMinimized = false;
+					break;
 
-				//Hide and quit on close
-			case SDL_WINDOWEVENT_CLOSE:
-				SDL_HideWindow(mWindow);
-				mClosed = true;
-				break;
+					//Hide and quit on close
+				case SDL_WINDOWEVENT_CLOSE:
+					SDL_HideWindow(mWindow);
+					mClosed = true;
+					break;
 			}
 
 			//Demo Update window caption with new data
@@ -243,7 +253,6 @@ public:
 						<< ((mKeyboardFocus) ? "On" : "Off");
 				SDL_SetWindowTitle(mWindow, caption.str().c_str());
 			}
-
 		}
 
 		//Case of Panels
@@ -251,13 +260,10 @@ public:
 		//Get mouse position
 		SDL_GetMouseState(&x, &y);
 
-		//printf("x=%d y=%d windowID=%d\n", x, y, mWindowID);
-
 		for (std::list<Panel*>::iterator iter = pList_->begin(); iter != pList_->end(); iter++)
 		{
 			Panel *p = (*iter);
 			p->handleEvent(e, x - p->getX(), y - p->getY());
-
 		}
 	}
 
@@ -294,7 +300,6 @@ public:
 	void addPanel(Panel* p)
 	{
 		pList_->push_back(p);
-
 	}
 
 	//TODO add get()
@@ -351,9 +356,6 @@ protected:
 
 		pList_ = new std::list<Panel*>();
 	}
-
-
-
 };
 
 #endif /* SIMULAUNCHER_MAIN_IWINDOW_HPP_ */

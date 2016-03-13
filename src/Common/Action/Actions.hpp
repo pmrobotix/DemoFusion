@@ -41,6 +41,7 @@ public:
 	 */
 	~Actions()
 	{
+		logger().debug() << "~Actions()" << logs::end;
 	}
 
 	/*!

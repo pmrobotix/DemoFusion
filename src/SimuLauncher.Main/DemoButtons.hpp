@@ -9,6 +9,7 @@
 #define SIMULAUNCHER_MAIN_DEMOBUTTONS_HPP_
 
 #include <SDL2/SDL_rect.h>
+#include <SDL2/SDL_stdinc.h>
 #include <string>
 
 #include "LButton.hpp"

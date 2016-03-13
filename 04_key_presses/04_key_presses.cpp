@@ -56,8 +56,6 @@ bool init()
 	{
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
 		success = false;
-
-
 	}
 	else
 	{

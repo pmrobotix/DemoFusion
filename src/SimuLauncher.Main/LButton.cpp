@@ -1,9 +1,11 @@
 #include "LButton.hpp"
 
+
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
-#include <iostream>
 
+#include "../Log/Logger.hpp"
+#include "IButtonListener.hpp"
 #include "LTexture.hpp"
 
 LButton::LButton(Uint32 windowID, int bWidth, int bHeight)
@@ -39,7 +41,6 @@ void LButton::setPosition(int x, int y)
 
 void LButton::handleEvent(SDL_Event* e)
 {
-
 	int x, y;
 	//Check if mouse is in button
 	bool inside = true;
@@ -121,17 +122,14 @@ void LButton::handleEvent(SDL_Event* e)
 						if (listener != NULL)
 						{
 							listener->leftButtonPressed();
-							//listener->buttonPressedPure();
-							//listener->buttonPressed();
 						}
 						else
 						{
-							std::cout << "error listener NULL" << std::endl;
-
+							logger().error() << "error listener NULL" << logs::end;
 						}
 						downup = 0;
-					}
 
+					}
 				}
 			}
 		}

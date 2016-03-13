@@ -19,7 +19,7 @@
 using namespace std;
 
 Robot::Robot() :
-		myColor_(PMXNOCOLOR), cArgs_("", "(c) PM-ROBOTIX", "-/")
+		myColor_(PMXNOCOLOR), cArgs_("", "(c) PM-ROBOTIX DEMO", "-/")
 {
 	actions_default = new Actions();
 
@@ -50,7 +50,6 @@ void Robot::parseConsoleArgs(int argc, char** argv)
 	if (!cArgs_.parse(argc, argv))
 	{
 		logger().error() << "Error parsing" << logs::end;
-		printf("Error parsing\n");
 		exit(-1);
 	}
 

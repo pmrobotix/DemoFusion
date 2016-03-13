@@ -24,7 +24,7 @@ void Actions::stopDevices()
 
 void Actions::waitAndStopManagers()
 {
-	int time;
+	int time = 0;
 	while (actionManager_.count() > 0)
 	{
 		logger().debug() << actionManager_.count() << logs::end;

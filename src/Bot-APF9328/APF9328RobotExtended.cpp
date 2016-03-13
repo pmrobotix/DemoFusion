@@ -9,7 +9,7 @@
 
 APF9328RobotExtended::APF9328RobotExtended()
 {
-	id_ = "BRobot";
+	id_ = "APF9328Robot";
 
 	myColor_ = PMXNOCOLOR;
 	actions_ = new APF9328ActionsExtended(id_);

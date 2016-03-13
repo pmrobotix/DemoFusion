@@ -17,10 +17,10 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::ERROR, "", "console");
 
 	add(logs::Level::INFO, "LedBarTest", "console");
-	add(logs::Level::DEBUG, "LedBar", "console");
-	add(logs::Level::DEBUG, "LedBarAction", "console");
+	add(logs::Level::INFO, "LedBar", "console");
+	add(logs::Level::INFO, "LedBarAction", "console");
 
 	//DRIVER
-	add(logs::Level::DEBUG, "LedDriver.SIMU", "console");
+	add(logs::Level::INFO, "LedDriver.SIMU", "console");
 
 }

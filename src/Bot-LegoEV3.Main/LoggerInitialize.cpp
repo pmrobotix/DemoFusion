@@ -20,7 +20,7 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "LedBarTest", "console");
 	add(logs::Level::INFO, "ButtonBarTest", "console");
 
-	add(logs::Level::DEBUG, "Robot", "console");
+	add(logs::Level::INFO, "Robot", "console");
 
 	add(logs::Level::INFO, "LegoEV3RobotExtended", "console");
 	add(logs::Level::INFO, "LegoEV3State1", "console");

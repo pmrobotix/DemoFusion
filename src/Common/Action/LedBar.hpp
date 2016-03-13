@@ -5,6 +5,7 @@
 #include <string>
 
 #include "../../Log/LoggerFactory.hpp"
+#include "../../Thread/Mutex.hpp"
 #include "../Action.Driver/ALedDriver.hpp"
 #include "../Utils/Chronometer.hpp"
 #include "../Utils/Macro.hpp"
@@ -59,8 +60,7 @@ private:
 	 */
 	static inline const logs::Logger & logger()
 	{
-		static const logs::Logger & instance = logs::LoggerFactory::logger(
-				"LedBar");
+		static const logs::Logger & instance = logs::LoggerFactory::logger("LedBar");
 		return instance;
 	}
 
@@ -109,7 +109,15 @@ private:
 	 */
 	uint hexNext_;
 
+	utils::Mutex mutex_;
+
 public:
+
+	/*!
+	 * \brief ID du robot.
+	 */
+	std::string botId_;
+
 	ALedDriver* leddriver;
 
 	/*!
@@ -126,7 +134,9 @@ public:
 
 	inline void stop(bool value)
 	{
+		//mutex_.lock();
 		this->actionStopped_ = value;
+		//mutex_.unlock();
 	}
 	inline bool stop() const
 	{
@@ -135,16 +145,19 @@ public:
 
 	inline void stopAndWait(bool value)
 	{
+		//mutex_.lock();
 		this->actionStopped_ = value;
 		while (this->actionRunning_)
 		{
 			usleep(1000);
 		}
+		//mutex_.unlock();
 	}
 
 	inline void actionRunning(bool value)
 	{
 		this->actionRunning_ = value;
+
 	}
 	inline bool actionRunning() const
 	{
@@ -263,8 +276,7 @@ public:
 	/*!
 	 * \brief Clignote toutes les leds nb fois sur les 2 valeurs hex val1 et val2.
 	 */
-	void alternate(uint nb, uint timeus, uint beginVal, uint endVal,
-			LedColor color = LED_GREEN);
+	void alternate(uint nb, uint timeus, uint beginVal, uint endVal, LedColor color = LED_GREEN);
 
 	/*!
 	 * \brief Clignote toutes les leds nb fois sur les 2 valeurs hex val1 et val2.
@@ -298,8 +310,8 @@ public:
 	 * \brief Lance l'action de faire alterner les leds selon les valeurs hexValue et hexValueNext.
 	 *
 	 */
-	void startAlternate(uint nb, uint timeus, uint hexValue, uint hexValueNext,
-			LedColor color = LED_GREEN, bool wait = false);
+	void startAlternate(uint nb, uint timeus, uint hexValue, uint hexValueNext, LedColor color =
+			LED_GREEN, bool wait = false);
 
 	/*!
 	 * \brief Lance l'action de faire clignoter toutes les leds nb fois tous les timeus.
@@ -309,8 +321,7 @@ public:
 	/*!
 	 * \brief Lance l'action de faire clignoter une led nb fois tous les timeus.
 	 */
-	void startBlinkPin(uint nb, uint timeus, int position, LedColor color,
-			bool wait);
+	void startBlinkPin(uint nb, uint timeus, int position, LedColor color, bool wait);
 
 	/*!
 	 * \brief Lance l'action d'allumer alternativement les leds à la "K2000".
@@ -349,13 +360,12 @@ private:
 	 */
 	static const logs::Logger & logger()
 	{
-		static const logs::Logger & instance = logs::LoggerFactory::logger(
-				"LedBarAction");
+		static const logs::Logger & instance = logs::LoggerFactory::logger("LedBarAction");
 		return instance;
 	}
 
 	/*!
-	 * \brief Référence vers la LedBar associée.
+	 * \brief Référence vers la barre de Leds associée.
 	 */
 	LedBar & ledBar_;
 
@@ -390,6 +400,7 @@ public:
 	 */
 	virtual inline ~LedBarAction()
 	{
+		logger().debug() << "~LedBarAction() for " << ledBar_.botId_ << logs::end;
 	}
 
 	/*!

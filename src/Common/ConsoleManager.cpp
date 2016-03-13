@@ -177,23 +177,3 @@ void ConsoleManager::executeTest(uint nTest, Arguments *args)
 		std::cout << "The N° must be between 0 and " << tests_.size() << std::endl;
 	}
 }
-/*
-void ConsoleManager::executeTest(uint nTest, Arguments *args)//char * argv0
-{
-	if (nTest > 0 && nTest <= tests_.size())
-	{
-		//char **argv = (char**) malloc(2 * sizeof(char*));
-		//argv[0] = argv0;
-
-		//argv[1] = (char *) calloc(1, 12);
-		//sprintf(argv[1], "%d", nTest);
-
-		std::cout << "Launch test n°" << nTest << " / " << tests_.size() << std::endl;
-		//launch the test
-		tests_[nTest - 1]->run(1, args);
-	}
-	else
-	{
-		std::cout << "The N° must be between 0 and " << tests_.size() << std::endl;
-	}
-}*/

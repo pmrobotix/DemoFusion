@@ -1,5 +1,6 @@
 #include "DemoButtons.hpp"
 
+#include <SDL2/SDL_stdinc.h>
 #include <cstdio>
 
 //#include "LWindows.hpp"

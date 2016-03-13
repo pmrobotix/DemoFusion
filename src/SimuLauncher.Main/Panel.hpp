@@ -26,7 +26,6 @@ public:
 
 	virtual void render(SDL_Renderer * renderer) = 0;
 
-
 	int getX()
 	{
 		return x_;

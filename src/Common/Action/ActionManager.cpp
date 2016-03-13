@@ -8,7 +8,6 @@
 #include <stddef.h>
 #include <unistd.h>
 
-
 ActionManager::ActionManager()
 		: stop_(false)
 {
@@ -23,11 +22,11 @@ void ActionManager::execute()
 	{
 		lock();
 		size = actions_.size();
-		unlock();
+
 		//logger().debug() << "size : " << size << logs::end;
 		if (size > 0)
 		{
-			lock();
+
 			IAction * action = actions_.front();
 			if (action == NULL)
 			{
@@ -35,16 +34,23 @@ void ActionManager::execute()
 			}
 			actions_.pop_front();
 			unlock();
+
 			bool persist = action->execute();
+
 			lock();
 			if (persist)
 			{
 				actions_.push_back(action);
 			}
+			else
+			{
+				delete action;
+			}
 			unlock();
 		}
 		else
 		{
+			unlock();
 			// Comme il n'y a pas d'action, le processus attend avant de
 			// relancer la boucle d'execution
 			usleep(1000);
@@ -52,7 +58,7 @@ void ActionManager::execute()
 	}
 
 	stop_ = false;
-	logger().info("ActionManager is stopped");
+	logger().debug("ActionManager is stopped");
 }
 
 void ActionManager::debug()

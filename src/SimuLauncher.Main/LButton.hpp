@@ -2,9 +2,13 @@
 #define SIMULAUNCHER_MAIN_LBUTTON_HPP_
 
 #include <SDL2/SDL_rect.h>
-#include <list>
+#include <SDL2/SDL_stdinc.h>
 
-#include "IButtonListener.hpp"
+#include "../Log/LoggerFactory.hpp"
+
+class IButtonListener;
+
+
 
 class LTexture;
 struct SDL_Renderer;
@@ -27,6 +31,25 @@ enum LButtonSprite
 //The mouse button
 class LButton
 {
+
+private:
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("LButton");
+		return instance;
+	}
+
+	Uint32 windowID_;
+	int width_;
+
+	int height_;
+
+	//Top left position
+	SDL_Point mPosition;
+
+	//Currently used global sprite
+	LButtonSprite mCurrentSprite;
+
 public:
 	//Initializes internal variables
 	LButton(Uint32 id, int bWidth, int bHeight);
@@ -50,20 +73,6 @@ public:
 	int bplay;
 	int downup;
 
-
-
-private:
-
-	Uint32 windowID_;
-	int width_;
-
-	int height_;
-
-	//Top left position
-	SDL_Point mPosition;
-
-	//Currently used global sprite
-	LButtonSprite mCurrentSprite;
 };
 
 #endif /* SIMULAUNCHER_MAIN_LBUTTON_HPP_ */

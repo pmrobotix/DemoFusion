@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Définition de l'interface ISDLTask.
+ * \brief Définition de l'interface pour SDLTask.
  */
 
 #ifndef SIMULAUNCHER_MAIN_ISDLTASK_HPP_

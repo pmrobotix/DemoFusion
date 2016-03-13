@@ -19,6 +19,7 @@ public:
 
 	~LegoEV3RobotExtended()
 	{
+		logger().debug() << "~LegoEV3RobotExtended()" << logs::end;
 	}
 
 	inline LegoEV3ActionsExtended& actions()

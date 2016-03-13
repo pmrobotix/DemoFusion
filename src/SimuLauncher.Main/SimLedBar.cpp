@@ -26,7 +26,7 @@ void SimLedBar::setBit(int i, LedColor color)
 	if (i < 0 || i >= nb_)
 	{
 		logger().error() << "Error SimLedBar::setBytes no color " << i << logs::end;
-		printf("Error SimLedBar::setBit invalid i= %d", i);
+		//printf("Error SimLedBar::setBit invalid i= %d", i);
 		exit(-1);
 	}
 
@@ -46,7 +46,7 @@ void SimLedBar::setBit(int i, LedColor color)
 		break;
 	default:
 		logger().error() << "Error SimLedBar::setBytes no color " << i << logs::end;
-		printf("Error SimLedBar::setBit no color %d", i);
+		//printf("Error SimLedBar::setBit no color %d", i);
 		exit(-1);
 	}
 }
@@ -75,7 +75,7 @@ void SimLedBar::setBytes(uint hex, LedColor color)
 				break;
 			default:
 				logger().error() << "Error SimLedBar::setBytes no color " << i << logs::end;
-				printf("Error SimLedBar::setBytes no color %d\n", i);
+				//printf("Error SimLedBar::setBytes no color %d\n", i);
 				exit(-1);
 			}
 		}
