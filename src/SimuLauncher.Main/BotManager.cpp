@@ -3,6 +3,7 @@
  *
  *  Created on: 31 janv. 2016
  *      Author: pmx
+ * test
  */
 
 #include "BotManager.hpp"
